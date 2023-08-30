@@ -1,9 +1,19 @@
 import socket
 import time
 
+def register_with_name_server(service_name, address):
+    name_server_host = '127.0.0.1'
+    name_server_port = 12347
+
+    name_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    name_socket.sendto(f"REGISTER {service_name} {address[0]} {address[1]}".encode(), (name_server_host, name_server_port))
+    name_socket.close()
+
 def udp_client(expression):
     host = '127.0.0.1'
     port = 12346
+
+    register_with_name_server("udp_calculator", (host, port))
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 

@@ -1,3 +1,5 @@
+import socket
+
 class NameServer:
     def __init__(self):
         self.registry = {}
@@ -8,13 +10,29 @@ class NameServer:
     def lookup(self, name):
         return self.registry.get(name, "Serviço não encontrado")
 
-if __name__ == "__main__":
+def name_server():
+    host = '127.0.0.1'
+    port = 12347
+
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    server_socket.bind((host, port))
+
     name_server = NameServer()
 
-    name_server.register("tcp_calculator", ("127.0.0.1", 12345))
-    name_server.register("udp_calculator", ("127.0.0.1", 12346))
+    print("Servidor de Nomes aguardando conexões...")
 
     while True:
-        query = input("Digite o nome do serviço para consulta: ")
-        address = name_server.lookup(query)
-        print("Endereço do serviço:", address)
+        data, addr = server_socket.recvfrom(1024)
+        data = data.decode()
+
+        if data.startswith("REGISTER"):
+            _, service_name, service_host, service_port = data.split()
+            service_address = (service_host, int(service_port))
+            name_server.register(service_name, service_address)
+            print(f"Registrado serviço '{service_name}' em {service_address}")
+        else:
+            response = name_server.lookup(data)
+            server_socket.sendto(response.encode(), addr)
+
+if __name__ == "__main__":
+    name_server()
