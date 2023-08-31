@@ -29,5 +29,4 @@ def tcp_server():
 
         conn.close()
 
-if __name__ == "__main__":
-    tcp_server()
+tcp_server()

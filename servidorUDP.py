@@ -24,5 +24,4 @@ def udp_server():
 
         server_socket.sendto(result.encode(), addr)
 
-if __name__ == "__main__":
-    udp_server()
+udp_server()

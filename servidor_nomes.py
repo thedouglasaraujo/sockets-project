@@ -51,5 +51,4 @@ def name_server():
             response = name_server.lookup(data)
             server_socket.sendto(response.encode(), addr)
 
-if __name__ == "__main__":
-    name_server()
+name_server()
