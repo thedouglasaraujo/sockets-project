@@ -1,32 +1,48 @@
 import socket
+import threading
+import signal
+import sys
+
+tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+tcp_server.bind(('localhost', 12345))
+tcp_server.listen(5)
+
+dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+dns_udp_client.sendto(b"register servidorTCP localhost 12345", ('localhost', 53))
+
+print("Servidor TCP da Calculadora Remota está ativo... (Caso queira encerrar o servidor, aperte 'Ctrl + C')")
 
 def calculate(expression):
     try:
         result = eval(expression)
         return str(result)
-    except:
-        return "Erro ao calcular"
+    except Exception as e:
+        return "Erro: " + str(e)
 
-def tcp_server():
-    host = '127.0.0.1'
-    port = 12345
+def exit_handler(sig, frame):
+    print("Encerrando servidor TCP...")
+    dns_udp_client.sendto(b"unregister servidorTCP", ('localhost', 53))
+    tcp_server.close()
+    sys.exit(0)
 
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind((host, port))
-    server_socket.listen(1)
+signal.signal(signal.SIGINT, exit_handler)
 
-    print("Servidor TCP aguardando conexões...")
-
+def server_thread():
     while True:
-        conn, addr = server_socket.accept()
-        print(f"Conexão estabelecida com {addr}")
+        tcp_conn, tcp_addr = tcp_server.accept()
+        print(f"Conexão TCP de {tcp_addr}")
+        data = tcp_conn.recv(1024).decode()
+        
+        response = calculate(data)
+        
+        tcp_conn.send(response.encode())
+        tcp_conn.close()
 
-        data = conn.recv(1024).decode()
-        print(f"Expressão recebida: {data}")
+server = threading.Thread(target=server_thread)
+server.start()
 
-        result = calculate(data)
-        conn.send(result.encode())
-
-        conn.close()
-
-tcp_server()
+try:
+    while True:
+        pass
+except KeyboardInterrupt:
+    pass

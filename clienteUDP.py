@@ -1,33 +1,15 @@
 import socket
 import time
 
-def register_with_name_server(service_name, address):
-    name_server_host = '127.0.0.1'
-    name_server_port = 12347
-
-    name_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    name_socket.sendto(f"REGISTER {service_name} {address[0]} {address[1]}".encode(), (name_server_host, name_server_port))
-    name_socket.close()
-
-def unregister_from_name_server(service_name):
-    name_server_host = '127.0.0.1'
-    name_server_port = 12347
-
-    name_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    name_socket.sendto(f"UNREGISTER {service_name}".encode(), (name_server_host, name_server_port))
-    name_socket.close()
-
 def udp_client(expressions):
     host = '127.0.0.1'
     port = 12346
-
-    register_with_name_server("udp_calculator", (host, port))
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     for expression in expressions:
         expression_str = expression[0]
-        
+
         start_time = time.perf_counter()
 
         client_socket.sendto(expression_str.encode(), (host, port))
@@ -45,14 +27,13 @@ def udp_client(expressions):
 
     client_socket.close()
 
-    unregister_from_name_server("udp_calculator")
-
 equations = [
-    ["10 + 5"],
-    ["20 - 8"],
-    ["5 * 6"],
-    ["12 / 3"],
-    ["2 ** 4"]
+    ["2 + 3"],
+    ["10 - 5"],
+    ["6 * 4"],
+    ["15 / 3"],
+    ["2 ** 4"],
+    ["20 + 8"]
 ]
 
 udp_client(equations)
