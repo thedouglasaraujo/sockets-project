@@ -1,10 +1,14 @@
 import socket
 import time
 
-def udp_client(expressions):
-    host = '127.0.0.1'
-    port = 12346
+def consultar_dns(server):
+    client_dns = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    client_dns.sendto(server.encode(), ('127.0.0.1', 3400))
+    response, address = client_dns.recvfrom(1024)
+    client_dns.close()
+    return response.decode()
 
+def udp_client(expressions):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     for expression in expressions:
@@ -35,6 +39,9 @@ equations = [
     ["2 ** 4"],
     ["20 + 8"]
 ]
+
+host = consultar_dns("query servidorUDP")
+port = 12346
 
 udp_client(equations)
 

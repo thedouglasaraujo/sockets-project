@@ -1,10 +1,14 @@
 import socket
 import time
 
-def tcp_client(expression):
-    host = '127.0.0.1'
-    port = 12345
+def consultar_dns(server):
+    client_dns = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    client_dns.sendto(server.encode(), ('127.0.0.1', 3400))
+    response, address = client_dns.recvfrom(1024)
+    client_dns.close()
+    return response.decode()
 
+def tcp_client(expression):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((host, port))
 
@@ -36,12 +40,15 @@ equations = [
     ["20 + 8"]
 ]
 
+host = consultar_dns("query servidorTCP")
+port = 12345
+
 for equation in equations:
     try:
         tcp_client(equation)
     except:
         dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        dns_udp_client.sendto(b"unsuccessful_connection meu_servico", ('localhost', 53))
+        dns_udp_client.sendto(b"unsuccessful_connection meu_servico", ('127.0.0.1', 3400))
         exit()
 
 input("\nPressione Enter para encerrar o programa...")
