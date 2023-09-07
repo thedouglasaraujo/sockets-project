@@ -25,11 +25,11 @@ def exit_handler(sig, frame):
     print("Encerrando servidor TCP...")
     dns_udp_client.sendto(b"unregister servidorTCP", ('127.0.0.1', 3400))
     tcp_server.close()
+    dns_udp_client.close()
     sys.exit(0)
 
 dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 dns_udp_client.sendto(b"register servidorTCP 127.0.0.1 12345", ('127.0.0.1', 3400))
-dns_udp_client.close()
 
 tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcp_server.bind(('127.0.0.1', 12345))

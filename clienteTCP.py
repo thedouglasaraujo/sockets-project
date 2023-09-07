@@ -48,7 +48,7 @@ for equation in equations:
         tcp_client(equation)
     except:
         dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        dns_udp_client.sendto(b"unsuccessful_connection meu_servico", ('127.0.0.1', 3400))
+        dns_udp_client.sendto(b"unsuccessful_connection servidortcp", ('127.0.0.1', 3400))
         exit()
 
 input("\nPressione Enter para encerrar o programa...")

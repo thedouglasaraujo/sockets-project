@@ -35,4 +35,4 @@ while True:
         dns_server.sendto(response.encode(), addr)
 
     else:
-        print("Serviço Não Encontrado!")
+        print(f"Serviço {service_name} Não Encontrado!")

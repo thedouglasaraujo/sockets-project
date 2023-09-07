@@ -23,11 +23,11 @@ def exit_handler(sig, frame):
     print("Encerrando servidor UDP...")
     dns_udp_client.sendto(b"unregister servidorUDP", ('127.0.0.1', 3400))
     udp_server.close()
+    dns_udp_client.close()
     sys.exit(0)
     
 dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 dns_udp_client.sendto(b"register servidorUDP 127.0.0.1 12346", ('127.0.0.1', 3400))
-dns_udp_client.close()
 
 udp_server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_server.bind(('127.0.0.1', 12346))
