@@ -1,0 +1,21 @@
+Armazenando tempo total de execução UDP
+------------------------------
+Expressão: 2 + 3
+Tempo: 38.19410000005519 milissegundos
+------------------------------
+Expressão: 10 - 5
+Tempo: 46.79029999999784 milissegundos
+------------------------------
+Expressão: 6 * 4
+Tempo: 31.415599999945698 milissegundos
+------------------------------
+Expressão: 15 / 3
+Tempo: 31.05059999995774 milissegundos
+------------------------------
+Expressão: 2 ** 4
+Tempo: 30.94290000001365 milissegundos
+------------------------------
+Expressão: 20 + 8
+Tempo: 29.207600000063394 milissegundos
+------------------------------
+Tempo total UDP: 207.6011000000335 milissegundos

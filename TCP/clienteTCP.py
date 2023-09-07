@@ -21,12 +21,18 @@ def tcp_client(expression):
 
     end_time = time.perf_counter()
 
-    print("Expressão:", expression_str)
-    print("Resultado:", result)
-
     elapsed_time = end_time - start_time
     elapsed_time_ms = elapsed_time * 1000
-    print("Tempo total:", elapsed_time_ms, "milissegundos")
+    elapsed_times_tcp.append(elapsed_time_ms)
+
+    with open('temposTCP.txt', 'a') as file:
+        file.write(f"Expressão: {expression_str}\n")
+        file.write(f"Tempo: {elapsed_time_ms} milissegundos\n")
+        file.write("-" * 30 + "\n")
+
+    print("Expressão:", expression_str)
+    print("Resultado:", result)
+    print("Tempo:", elapsed_time_ms, "milissegundos")
     print("-" * 30)
 
     client_socket.close()
@@ -43,6 +49,11 @@ equations = [
 host = consultar_dns("query servidorTCP")
 port = 12345
 
+elapsed_times_tcp = []
+with open('temposTCP.txt', 'w') as file:
+    file.write(f"Armazenando tempo total de execução TCP\n")
+    file.write("-" * 30 + "\n")
+
 for equation in equations:
     try:
         tcp_client(equation)
@@ -50,5 +61,10 @@ for equation in equations:
         dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         dns_udp_client.sendto(b"unsuccessful_connection servidortcp", ('127.0.0.1', 3400))
         exit()
+
+total_time_tcp = sum(elapsed_times_tcp)
+
+with open('temposTCP.txt', 'a') as file:
+    file.write(f"Tempo total TCP: {total_time_tcp} milissegundos\n")
 
 input("\nPressione Enter para encerrar o programa...")

@@ -21,12 +21,18 @@ def udp_client(expressions):
 
         end_time = time.perf_counter()
 
-        print("Expressão:", expression_str)
-        print("Resultado:", result.decode())
-
         elapsed_time = end_time - start_time
         elapsed_time_ms = elapsed_time * 1000
-        print("Tempo total:", elapsed_time_ms, "milissegundos")
+        elapsed_times_udp.append(elapsed_time_ms)
+
+        with open('temposUDP.txt', 'a') as file:
+            file.write(f"Expressão: {expression_str}\n")
+            file.write(f"Tempo: {elapsed_time_ms} milissegundos\n")
+            file.write("-" * 30 + "\n")
+
+        print("Expressão:", expression_str)
+        print("Resultado:", result.decode())
+        print("Tempo:", elapsed_time_ms, "milissegundos")
         print("-" * 30)
 
     client_socket.close()
@@ -43,11 +49,21 @@ equations = [
 host = consultar_dns("query servidorUDP")
 port = 12346
 
+elapsed_times_udp = []
+with open('temposUDP.txt', 'w') as file:
+    file.write(f"Armazenando tempo total de execução UDP\n")
+    file.write("-" * 30 + "\n")
+    
 try:
     udp_client(equations)
 except:
     dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     dns_udp_client.sendto(b"unsuccessful_connection servidorudp", ('127.0.0.1', 3400))
     exit()
+
+total_time_udp = sum(elapsed_times_udp)
+
+with open('temposUDP.txt', 'a') as file:
+    file.write(f"Tempo total UDP: {total_time_udp} milissegundos\n")
 
 input("\nPressione Enter para encerrar o programa...")

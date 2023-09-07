@@ -1,0 +1,21 @@
+Armazenando tempo total de execução TCP
+------------------------------
+Expressão: 2 + 3
+Tempo: 24.849700000004304 milissegundos
+------------------------------
+Expressão: 10 - 5
+Tempo: 79.21649999991587 milissegundos
+------------------------------
+Expressão: 6 * 4
+Tempo: 62.580300000036004 milissegundos
+------------------------------
+Expressão: 15 / 3
+Tempo: 30.048299999975825 milissegundos
+------------------------------
+Expressão: 2 ** 4
+Tempo: 76.99830000001384 milissegundos
+------------------------------
+Expressão: 20 + 8
+Tempo: 77.83759999995254 milissegundos
+------------------------------
+Tempo total TCP: 351.5306999998984 milissegundos
