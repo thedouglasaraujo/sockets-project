@@ -46,8 +46,9 @@ equations = [
     ["20 + 8"]
 ]
 
-host = consultar_dns("query servidorUDP")
-port = 12346
+consulta = consultar_dns("query servidorUDP").split(":")
+host = consulta[0]
+port = int(consulta[1])
 
 elapsed_times_udp = []
 with open('temposUDP.txt', 'w') as file:

@@ -35,7 +35,7 @@ tcp_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcp_server.bind(('127.0.0.1', 12345))
 tcp_server.listen(5)
 
-print("Servidor TCP da Calculadora Remota está ativo... (Caso queira encerrar o servidor, aperte 'Ctrl + C')")
+print("Servidor TCP da Calculadora Remota está ativo...\n(Caso queira encerrar o servidor, aperte 'Ctrl + C')")
 
 signal.signal(signal.SIGINT, exit_handler)
 

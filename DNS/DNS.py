@@ -29,7 +29,7 @@ while True:
     elif action == "query":
         if service_name in service_registry:
             host, port = service_registry[service_name]
-            response = host
+            response = f"{host}:{port}"
         else:
             response = f"Serviço não encontrado: {service_name}"
         dns_server.sendto(response.encode(), addr)

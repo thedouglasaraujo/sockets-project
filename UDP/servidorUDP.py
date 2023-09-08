@@ -32,7 +32,7 @@ dns_udp_client.sendto(b"register servidorUDP 127.0.0.1 12346", ('127.0.0.1', 340
 udp_server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_server.bind(('127.0.0.1', 12346))
 
-print("Servidor UDP da Calculadora Remota está ativo... (Caso queira encerrar o servidor, aperte 'Ctrl + C')")
+print("Servidor UDP da Calculadora Remota está ativo...\n(Caso queira encerrar o servidor, aperte 'Ctrl + C')")
 
 signal.signal(signal.SIGINT, exit_handler)
 
