@@ -14,3 +14,6 @@ O serviço desenvolvido é uma calculadora remota com base em uma aplicação cl
 - A ordem de execução é: DNS -> Servidores -> Clientes.
 - Você pode executar os dois pares (clientes e servidores) do UDP e TCP ao mesmo tempo ou executar apenas um par de uma das duas comunicações.
 - Lembrando que cada um dos arquivos deve ser rodado em terminais diferentes.
+
+## :camera: Capturas
+[Clique aqui para acessar as capturas realizadas no Wireshark](https://github.com/thedouglasaraujo/sockets-project/blob/main/capturas-wireshark/README.md)
